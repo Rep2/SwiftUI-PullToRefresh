@@ -27,8 +27,9 @@ public struct RefreshableNavigationView<Content: View>: View {
         NavigationView{
             RefreshableList(showRefreshView: $showRefreshView, pullStatus: $pullStatus, action: self.action) {
                 self.content()
-            }.navigationBarTitle(title)
-                .navigationBarItems(trailing: self.trailingView)
+            }
+            .navigationBarTitle(title)
+            .navigationBarItems(trailing: self.trailingView)
         }
         .offset(x: 0, y: self.showRefreshView ? 34 : 0)
         .onAppear{
