@@ -14,9 +14,11 @@ public struct RefreshableNavigationView<Content: View>: View {
     @State public var showRefreshView: Bool = false
     @State public var pullStatus: CGFloat = 0
     private var title: String
+    private var trailingView: AnyView?
 
-    public init(title:String, action: @escaping () -> Void ,@ViewBuilder content: @escaping () -> Content) {
+    public init(title: String, trailingView: AnyView? = nil, action: @escaping () -> Void ,@ViewBuilder content: @escaping () -> Content) {
         self.title = title
+        self.trailingView = trailingView
         self.action = action
         self.content = content
     }
@@ -26,6 +28,7 @@ public struct RefreshableNavigationView<Content: View>: View {
             RefreshableList(showRefreshView: $showRefreshView, pullStatus: $pullStatus, action: self.action) {
                 self.content()
             }.navigationBarTitle(title)
+                .navigationBarItems(trailing: self.trailingView)
         }
         .offset(x: 0, y: self.showRefreshView ? 34 : 0)
         .onAppear{
